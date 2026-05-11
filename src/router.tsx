@@ -1,0 +1,102 @@
+import { createBrowserRouter, redirect } from "react-router";
+import RootLayout from "./components/layout/RootLayout";
+import DonatePage from "./pages/DonatePage";
+import LoginPage from "./pages/LoginPage";
+import { getTransactions, getUserBySlug } from "./services/api";
+import NotFound from "./components/common/NotFound";
+import SignupPage from "./pages/SignupPage";
+import DonationsPage from "./pages/DonationsPage";
+import ProtectedRoute from "./components/common/ProtectedRoute";
+import HomeLayout from "./components/layout/HomeLayout";
+import ComingSoon from "./components/common/ComingSoon";
+import { isAxiosError } from "axios";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <RootLayout />,
+    children: [
+      {
+        path: "/login",
+        element: <LoginPage />,
+        loader: () => {
+          const token = localStorage.getItem("token");
+          if (token) return redirect("/");
+        },
+      },
+      {
+        path: "/signup",
+        element: <SignupPage />,
+      },
+      {
+        path: "/",
+        element: (
+          <ProtectedRoute>
+            <HomeLayout />
+          </ProtectedRoute>
+        ),
+        children: [
+          {
+            index: true,
+            loader: () => redirect("/donations"),
+          },
+          {
+            path: "/donations",
+            element: <DonationsPage />,
+            loader: async () => {
+              const token = localStorage.getItem("token");
+              if (!token) return redirect("/login");
+
+              try {
+                const transactions = await getTransactions();
+                return transactions;
+              } catch (err) {
+                if (isAxiosError(err)) {
+                  if (err.response?.status === 404) {
+                    return redirect("/404");
+                  } else if (err.response?.status === 401) {
+                    return redirect("/login");
+                  }
+                }
+                throw err;
+              }
+            },
+          },
+          {
+            path: "/payouts",
+            element: <ComingSoon />,
+          },
+          {
+            path: "/notifications",
+            element: <ComingSoon />,
+          },
+          {
+            path: "/fundraising",
+            element: <ComingSoon />,
+          },
+        ],
+      },
+    ],
+  },
+  {
+    path: "/:donationSlug",
+    element: <DonatePage />,
+    loader: async ({ params }) => {
+      try {
+        const user = await getUserBySlug(params.donationSlug!);
+        return user;
+      } catch (err) {
+        if (isAxiosError(err) && err.response?.status === 404) {
+          return redirect("/404");
+        }
+        throw err;
+      }
+    },
+  },
+  {
+    path: "/404",
+    element: <NotFound />,
+  },
+]);
+
+export default router;

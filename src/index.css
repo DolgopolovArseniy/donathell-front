@@ -1,0 +1,28 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans:
+    "Exo 2", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --color-donathell-main: #54fb15;
+  --color-donathell-secondary: #e8ebe8;
+}
+
+*:focus {
+  outline: none;
+  box-shadow: 0 0 6px 2px rgba(82, 251, 21, 0.945);
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  display: none;
+}
+
+html {
+  overflow-x: hidden;
+}
+
+body {
+  @apply bg-[#141517] min-h-dvh overflow-x-hidden antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
