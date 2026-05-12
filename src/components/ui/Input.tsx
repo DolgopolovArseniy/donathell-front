@@ -16,7 +16,7 @@ export default function Input({
     <input
       autoComplete="off"
       className={`bg-[#131416] rounded-xl outline-none placeholder-[#c7ccc8a8] 
-                  h-11
+                  h-11 p-1.5
                   duration-100 text-donathell-secondary glass-input
                   ${showPassword ? "font-mono" : ""} 
                   ${className}`}

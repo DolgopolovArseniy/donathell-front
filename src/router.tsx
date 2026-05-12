@@ -48,8 +48,10 @@ const router = createBrowserRouter([
               if (!token) return redirect("/login");
 
               try {
-                const transactions = await getTransactions();
-                return transactions;
+                const { transactions, total } = await getTransactions({
+                  page: 1,
+                });
+                return { transactions, total };
               } catch (err) {
                 if (isAxiosError(err)) {
                   if (err.response?.status === 404) {

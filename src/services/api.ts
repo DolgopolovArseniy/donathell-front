@@ -21,6 +21,18 @@ export interface SignupData {
   passwordConfirm: string;
 }
 
+interface QueryParams {
+  page: number;
+  currency?: CurrencyCode;
+  from?: string;
+  dateFrom?: string;
+  dateTo?: string;
+  minAmount?: number;
+  maxAmount?: number;
+}
+
+export type AppliedFilters = Omit<QueryParams, "page">;
+
 export type AuthFn = (
   data: LoginData | SignupData,
 ) => Promise<{ token: string; user: User }>;
@@ -48,9 +60,17 @@ export const createTransaction = async (
   await api.post("/transactions", data);
 };
 
-export const getTransactions = async (): Promise<Transaction[]> => {
-  const res = await api.get("/transactions");
-  return res.data.data.transactions;
+export const getTransactions = async (
+  params: QueryParams,
+): Promise<{
+  transactions: Transaction[];
+  total: number;
+}> => {
+  const res = await api.get("/transactions", { params });
+  return {
+    transactions: res.data.data.transactions,
+    total: res.data.total,
+  };
 };
 
 export const getMe = async (): Promise<User> => {

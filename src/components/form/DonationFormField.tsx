@@ -22,7 +22,7 @@ function DonationFormField({
         {label}
       </label>
       <Input
-        className="w-full max-w-full p-1 sm:max-w-60"
+        className="w-full max-w-full sm:max-w-60"
         type={type}
         id={label}
         placeholder={inputPlaceholder}

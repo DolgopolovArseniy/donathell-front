@@ -19,7 +19,7 @@ export default function HomeLayout() {
           </section>
         </Nav>
       </aside>
-      <section className="mt-4 min-w-0 flex-1 pb-20 md:mt-7 md:pl-88">
+      <section className="mt-4 min-w-0 flex-1 pb-10 md:mt-7 md:pl-88">
         <Outlet />
       </section>
     </main>
