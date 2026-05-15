@@ -53,10 +53,6 @@ export default function Header({ isAuthenticated = false }: HeaderProps) {
                   <PanelTop size={28} />
                   My page
                 </Link>
-                <li className={className}>
-                  <Settings2 size={28} />
-                  Settings
-                </li>
               </ul>
               <button
                 className={className}

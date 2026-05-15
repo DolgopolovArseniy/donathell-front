@@ -20,13 +20,11 @@ export interface DonationsFiltersPanelProps {
   setDateTo: (value: string) => void;
   setMinAmount: (value: string) => void;
   setMaxAmount: (value: string) => void;
-  setAppliedFilters: (filters: AppliedFilters) => void;
   fetchTransactions: (
     page: number,
     filters: AppliedFilters,
   ) => Promise<string | undefined>;
   setIsFilterOpen: (value: boolean) => void;
-  page: number;
 }
 
 export default function DonationsFiltersPanel({
@@ -43,10 +41,8 @@ export default function DonationsFiltersPanel({
   setDateTo,
   setMinAmount,
   setMaxAmount,
-  setAppliedFilters,
   fetchTransactions,
   setIsFilterOpen,
-  page,
 }: DonationsFiltersPanelProps) {
   function resetFilters() {
     setCurrency("");
@@ -55,8 +51,7 @@ export default function DonationsFiltersPanel({
     setDateTo("");
     setMinAmount("");
     setMaxAmount("");
-
-    setAppliedFilters({});
+    setIsFilterOpen(false);
     fetchTransactions(1, {});
   }
 
@@ -68,18 +63,18 @@ export default function DonationsFiltersPanel({
     if (dateTo) newFilters.dateTo = dateTo;
     if (minAmount) newFilters.minAmount = Number(minAmount);
     if (maxAmount) newFilters.maxAmount = Number(maxAmount);
-    setAppliedFilters(newFilters);
-    await fetchTransactions(page, newFilters);
+    await fetchTransactions(1, newFilters);
     setIsFilterOpen(false);
   }
 
   return (
     <div
-      className={`overflow-hidden transition-all duration-100 ${
-        open ? "max-h-160 mt-6" : "max-h-0"
+      className={`grid transition-all duration-300 ${
+        open ? "grid-rows-[1fr] mt-6" : "grid-rows-[0fr]"
       }`}
     >
-      <div className="rounded-3xl bg-[#121315] glass p-6">
+      <div className="overflow-hidden">
+        <div className="rounded-3xl bg-[#121315] glass p-6">
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           <FilterField label="Currency">
             <div className="flex flex-wrap gap-2">
@@ -144,6 +139,7 @@ export default function DonationsFiltersPanel({
             Apply
           </Button>
         </div>
+      </div>
       </div>
     </div>
   );
