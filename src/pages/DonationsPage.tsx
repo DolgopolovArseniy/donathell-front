@@ -87,24 +87,6 @@ export default function DonationsPage() {
 
   const { isOpen: isFiltersOpen, setIsOpen: setIsFilterOpen, ref: filterPanelRef } = useClickOutside(false);
 
-  const [currency, setCurrency] = useState<CurrencyCode | "">("");
-  const [from, setFrom] = useState("");
-  const [dateFrom, setDateFrom] = useState("");
-  const [dateTo, setDateTo] = useState("");
-  const [minAmount, setMinAmount] = useState("");
-  const [maxAmount, setMaxAmount] = useState("");
-
-  useEffect(() => {
-    if (!isFiltersOpen) {
-      setCurrency(appliedFilters.currency || "");
-      setFrom(appliedFilters.from || "");
-      setDateFrom(appliedFilters.dateFrom || "");
-      setDateTo(appliedFilters.dateTo || "");
-      setMinAmount(appliedFilters.minAmount ? String(appliedFilters.minAmount) : "");
-      setMaxAmount(appliedFilters.maxAmount ? String(appliedFilters.maxAmount) : "");
-    }
-  }, [isFiltersOpen, appliedFilters]);
-
   return (
     <>
       <title>Donations - Donathell</title>
@@ -130,18 +112,7 @@ export default function DonationsPage() {
           </div>
           <DonationsFiltersPanel
             open={isFiltersOpen}
-            currency={currency}
-            from={from}
-            dateFrom={dateFrom}
-            dateTo={dateTo}
-            minAmount={minAmount}
-            maxAmount={maxAmount}
-            setCurrency={setCurrency}
-            setFrom={setFrom}
-            setDateFrom={setDateFrom}
-            setDateTo={setDateTo}
-            setMinAmount={setMinAmount}
-            setMaxAmount={setMaxAmount}
+            appliedFilters={appliedFilters}
             fetchTransactions={fetchTransactions}
             setIsFilterOpen={setIsFilterOpen}
           />
