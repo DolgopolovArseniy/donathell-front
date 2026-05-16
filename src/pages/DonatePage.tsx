@@ -7,8 +7,10 @@ import { useLoaderData, useParams } from "react-router";
 import { createTransaction } from "../services/api";
 import Header from "../components/common/Header";
 import { Currency, User } from "../types/types";
+import { useAuth } from "../context/AuthContext";
 
 export default function DonatePage() {
+  const { isAuthenticated } = useAuth();
   const [selectedCurrency, setSelectedCurrency] = useState<Currency>(
     CURRENCIES[0],
   );
@@ -59,8 +61,8 @@ export default function DonatePage() {
   return (
     <>
       <title>Donate - Donathell</title>
-      <Header />
-      <main className="mx-auto flex min-h-[calc(100dvh-4rem)] w-full max-w-3xl items-center justify-center px-3 pt-18 text-donathell-secondary sm:px-4">
+      <Header isAuthenticated={isAuthenticated} />
+      <main className="mx-auto flex min-h-[calc(100dvh-4rem)] w-full max-w-3xl items-center justify-center px-3 pt-18 pb-20 md:pb-0 text-donathell-secondary sm:px-4">
         <div className="mb-10 flex min-h-120 w-full max-w-3xl flex-col items-center justify-center px-1">
           <div className="w-full bg-[#121315]  mb-2.5 rounded-3xl min-h-18 flex  items-center justify-center glass">
             <h2 className="font-bold text-3xl text-donathell-main">

@@ -2,14 +2,22 @@ import { createBrowserRouter, redirect } from "react-router";
 import RootLayout from "./components/layout/RootLayout";
 import DonatePage from "./pages/DonatePage";
 import LoginPage from "./pages/LoginPage";
-import { getTransactions, getUserBySlug } from "./services/api";
+import { getDashboardStats, getTransactions, getUserBySlug } from "./services/api";
 import NotFound from "./components/common/NotFound";
 import SignupPage from "./pages/SignupPage";
 import DonationsPage from "./pages/DonationsPage";
 import ProtectedRoute from "./components/common/ProtectedRoute";
 import HomeLayout from "./components/layout/HomeLayout";
-import ComingSoon from "./components/common/ComingSoon";
+import DashboardPage from "./pages/DashboardPage";
 import { isAxiosError } from "axios";
+
+const handleLoaderError = (err: unknown) => {
+  if (isAxiosError(err)) {
+    if (err.response?.status === 404) return redirect("/404");
+    if (err.response?.status === 401) return redirect("/login");
+  }
+  throw err;
+};
 
 const router = createBrowserRouter([
   {
@@ -53,28 +61,21 @@ const router = createBrowserRouter([
                 });
                 return { transactions, total };
               } catch (err) {
-                if (isAxiosError(err)) {
-                  if (err.response?.status === 404) {
-                    return redirect("/404");
-                  } else if (err.response?.status === 401) {
-                    return redirect("/login");
-                  }
-                }
-                throw err;
+                return handleLoaderError(err);
               }
             },
           },
           {
-            path: "/payouts",
-            element: <ComingSoon />,
-          },
-          {
-            path: "/notifications",
-            element: <ComingSoon />,
-          },
-          {
-            path: "/fundraising",
-            element: <ComingSoon />,
+            path: "/dashboard",
+            element: <DashboardPage />,
+            loader: async () => {
+              try {
+                const data = await getDashboardStats("7d");
+                return data;
+              } catch (err) {
+                return handleLoaderError(err);
+              }
+            }
           },
         ],
       },

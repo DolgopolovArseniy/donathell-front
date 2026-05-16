@@ -37,6 +37,40 @@ export type AuthFn = (
   data: LoginData | SignupData,
 ) => Promise<{ token: string; user: User }>;
 
+export interface BalanceItem {
+  currency: string;
+  amount: number;
+  convertedAmount: number;
+}
+
+export interface DistributionItem {
+  name: string;
+  value: number;
+  convertedValue: number;
+}
+
+export interface TopDonorItem {
+  name: string;
+  amount: number;
+  convertedValue: number;
+}
+
+export interface ChartDataItem {
+  time: string;
+  amount: number;
+}
+
+type RangeQueryParam = "1d" | "7d" | "30d";
+
+export interface DashboardStatsData {
+  cryptoBalances: BalanceItem[];
+  fiatBalances: BalanceItem[];
+  cryptoDistribution: DistributionItem[];
+  fiatDistribution: DistributionItem[];
+  topDonors: TopDonorItem[];
+  chartData: ChartDataItem[];
+}
+
 const api = axios.create({
   baseURL: "http://localhost:8000/api/v1/",
 });
@@ -71,6 +105,14 @@ export const getTransactions = async (
     transactions: res.data.data.transactions,
     total: res.data.total,
   };
+};
+
+export const getDashboardStats = async (range: RangeQueryParam = "7d"): Promise<DashboardStatsData> => {
+  const res = await api.get("/transactions/stats", {
+    params: { range }
+  });
+
+  return res.data.data;
 };
 
 export const getMe = async (): Promise<User> => {

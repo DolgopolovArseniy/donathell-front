@@ -18,7 +18,6 @@ export default function DonationsPage() {
 
   const {
     transactions,
-    setTransactions,
     page,
     isLoading,
     total,
@@ -90,10 +89,10 @@ export default function DonationsPage() {
   return (
     <>
       <title>Donations - Donathell</title>
-      <div className="flex w-full max-w-260 flex-col">
+      <div className="flex w-full flex-col">
         <div ref={filterPanelRef}>
           <div className="flex flex-col gap-1 text-lg sm:flex-row sm:items-center sm:justify-between sm:text-xl">
-            <h2>Donations</h2>
+            <h2 className="text-xl sm:text-2xl font-bold">Donations</h2>
             <div className="flex items-center gap-8">
               <div>
                 <Button
@@ -107,7 +106,15 @@ export default function DonationsPage() {
                   Filter
                 </Button>
               </div>
-              <span>{total} total</span>
+              <div className="flex items-center gap-2.5 px-3.5 py-1.5 bg-white/5 border border-white/10 rounded-full shadow-inner">
+                <span className="relative flex h-2 w-2">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-donathell-main opacity-20"></span>
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-donathell-main"></span>
+                </span>
+                <span className="text-sm font-bold text-white/80 tracking-tight">
+                  {total} <span className="text-[10px] uppercase text-[#666] ml-1 font-black">Total</span>
+                </span>
+              </div>
             </div>
           </div>
           <DonationsFiltersPanel
