@@ -1,12 +1,12 @@
 import { useLoaderData } from "react-router";
 import { useState, useEffect } from "react";
 import { RefreshCw } from "lucide-react";
-import { DashboardStatsData, getDashboardStats } from "../services/api";
-import BalanceCard from "../components/dashboard/BalanceCard";
-import DonationTrends from "../components/dashboard/DonationTrends";
-import TopDonors from "../components/dashboard/TopDonors";
-import DistributionChart from "../components/dashboard/DistributionChart";
-import Button from "../components/ui/Button";
+import { DashboardStatsData, getDashboardStats } from "../shared/services/api";
+import { BalanceCard } from "../features/dashboard";
+import { DonationTrends } from "../features/dashboard";
+import { TopDonors } from "../features/dashboard";
+import { DistributionChart } from "../features/dashboard";
+import Button from "../shared/components/Button";
 
 const CURRENCY_COLORS: Record<string, string> = {
   BTC: "#F7931A",

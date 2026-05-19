@@ -1,10 +1,10 @@
 import { useForm } from "react-hook-form";
-import AuthFormField from "../components/form/AuthFormField";
-import AuthFormInput from "../components/form/AuthFormInput";
-import AuthErrorMessage from "../components/form/AuthFormErrorMessage";
-import { signupApi } from "../services/api";
-import AuthForm from "../components/form/AuthForm";
-import { useAuthSubmit } from "../hooks/useAuthSubmit";
+import { AuthFormField } from "../features/auth";
+import { AuthFormInput } from "../features/auth";
+import { AuthFormErrorMessage } from "../features/auth";
+import { signupApi } from "../shared/services/api";
+import { AuthForm } from "../features/auth";
+import { useAuthSubmit } from "../features/auth";
 
 interface FormValues {
   username: string;
@@ -45,7 +45,7 @@ export default function SignupPage() {
               })}
             />
             {errors.username && (
-              <AuthErrorMessage message={errors.username.message!} />
+              <AuthFormErrorMessage message={errors.username.message!} />
             )}
           </AuthFormField>
           <AuthFormField label="Email" htmlFor="email">
@@ -57,7 +57,7 @@ export default function SignupPage() {
               })}
             />
             {errors.email && (
-              <AuthErrorMessage message={errors.email.message!} />
+              <AuthFormErrorMessage message={errors.email.message!} />
             )}
           </AuthFormField>
           <AuthFormField label="Password" htmlFor="password">
@@ -78,7 +78,7 @@ export default function SignupPage() {
               })}
             />
             {errors.password && (
-              <AuthErrorMessage message={errors.password.message!} />
+              <AuthFormErrorMessage message={errors.password.message!} />
             )}
           </AuthFormField>
           <AuthFormField label="Confirm password" htmlFor="passwordConfirm">
@@ -92,7 +92,7 @@ export default function SignupPage() {
               })}
             />
             {errors.passwordConfirm && (
-              <AuthErrorMessage message={errors.passwordConfirm.message!} />
+              <AuthFormErrorMessage message={errors.passwordConfirm.message!} />
             )}
           </AuthFormField>
         </AuthForm>

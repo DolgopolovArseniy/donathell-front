@@ -1,13 +1,13 @@
 import { useLoaderData } from "react-router";
 import "../glass.css";
-import { CurrencyCode, Transaction } from "../types/types";
+import { CurrencyCode, Transaction } from "../shared/types/types";
 import { useEffect, useState, useRef } from "react";
 import { LoaderCircle, TextAlignJustify } from "lucide-react";
-import Button from "../components/ui/Button";
-import DonationsTable from "../components/donations/DonationsTable";
-import DonationsFiltersPanel from "../components/donations/DonationsFiltersPanel";
-import { useDonationsList } from "../hooks/useDonationsList";
-import { useClickOutside } from "../hooks/useClickOutside";
+import Button from "../shared/components/Button";
+import { DonationsTable } from "../features/donations";
+import { DonationsFiltersPanel } from "../features/donations";
+import { useDonationsList } from "../features/donations";
+import { useClickOutside } from "../shared/hooks/useClickOutside";
 
 export default function DonationsPage() {
   const { transactions: initialTransactions, total: initialTotal } =

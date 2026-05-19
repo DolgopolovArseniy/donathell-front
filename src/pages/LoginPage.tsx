@@ -1,10 +1,10 @@
 import { useForm } from "react-hook-form";
-import AuthFormField from "../components/form/AuthFormField";
-import AuthFormInput from "../components/form/AuthFormInput";
-import AuthErrorMessage from "../components/form/AuthFormErrorMessage";
-import { loginApi } from "../services/api";
-import AuthForm from "../components/form/AuthForm";
-import { useAuthSubmit } from "../hooks/useAuthSubmit";
+import { AuthFormField } from "../features/auth";
+import { AuthFormInput } from "../features/auth";
+import { AuthFormErrorMessage } from "../features/auth";
+import { loginApi } from "../shared/services/api";
+import { AuthForm } from "../features/auth";
+import { useAuthSubmit } from "../features/auth";
 
 interface FormValues {
   loginIdentifier: string;
@@ -40,7 +40,7 @@ export default function LoginPage() {
               })}
             />
             {errors.loginIdentifier && (
-              <AuthErrorMessage message={errors.loginIdentifier.message!} />
+              <AuthFormErrorMessage message={errors.loginIdentifier.message!} />
             )}
           </AuthFormField>
           <AuthFormField label="Password" htmlFor="password">
@@ -50,7 +50,7 @@ export default function LoginPage() {
               {...register("password", { required: "Password is required" })}
             />
             {errors.password && (
-              <AuthErrorMessage message={errors.password.message!} />
+              <AuthFormErrorMessage message={errors.password.message!} />
             )}
           </AuthFormField>
         </AuthForm>

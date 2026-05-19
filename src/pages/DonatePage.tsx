@@ -1,13 +1,13 @@
 import { useState } from "react";
-import CurrencySelect from "../components/common/CurrencySelect";
-import DonationFormField from "../components/form/DonationFormField";
-import { CURRENCIES } from "../constants/currencies";
+import { CurrencySelect } from "../features/donations";
+import { DonationFormField } from "../features/donations";
+import { CURRENCIES } from "../shared/constants/currencies";
 import toast from "react-hot-toast";
 import { useLoaderData, useParams } from "react-router";
-import { createTransaction } from "../services/api";
-import Header from "../components/common/Header";
-import { Currency, User } from "../types/types";
-import { useAuth } from "../context/AuthContext";
+import { createTransaction } from "../shared/services/api";
+import Header from "../shared/components/Header";
+import { Currency, User } from "../shared/types/types";
+import { useAuth } from "../features/auth";
 
 export default function DonatePage() {
   const { isAuthenticated } = useAuth();
@@ -74,14 +74,14 @@ export default function DonatePage() {
               label="Name"
               inputPlaceholder="Senya"
               value={name}
-              onChange={(e) => setName(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setName(e.target.value)}
               type="text"
             />
             <DonationFormField
               label="Amount"
               inputPlaceholder="200"
               value={amount}
-              onChange={(e) => setAmount(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setAmount(e.target.value)}
               type="number"
             />
             <CurrencySelect
