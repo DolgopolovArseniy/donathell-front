@@ -1,7 +1,7 @@
-/* global expect */
 /**
  * @jest-environment jsdom
  */
+/* global expect */
 import '@testing-library/jest-dom';
 import { describe, it, jest, beforeEach, afterEach } from '@jest/globals';
 import { render, screen, waitFor } from '@testing-library/react';
